@@ -1,3 +1,5 @@
+@Library('SharedLibraryNTI') _  // استدعاء المكتبة المشتركة
+
 pipeline {
     agent { label 'slave' }
     
@@ -8,7 +10,7 @@ pipeline {
         DOCKER_IMAGE       = "rana_image2"
         DOCKERHUB_CRED_ID  = "dockerhub"
         K8S_CRED_ID        = 'kube'  // تعريف معرف الكريديشينال للـ K8S
-        DEPLOYMENT         = 'SharedLibraryNTI/resources/deployment.yaml' // المسار الصحيح للملف
+        DEPLOYMENT         = 'deployment.yaml' // اسم الملف الذي سيتم نشره
     }
     
     stages {
@@ -55,6 +57,8 @@ pipeline {
     }
 }
 
+        
+        
 
         
        

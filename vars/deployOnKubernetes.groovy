@@ -10,11 +10,13 @@ def call(String k8sCredentialsID, String repoName, String imageName, String depl
     sh "sed -i 's|image:.*|image: ${repoName}/${imageName}:${BUILD_NUMBER}|g' ${deploymentFile}"
 
     // استخدام kubeconfig المخزن في Jenkins Credentials
-    withCredentials([file(credentialsId: "${k8sCredentialsID}", variable: 'KUBECONFIG')]) {
+    withCredentials([file(credentialsId: "${k8sCredentialsID}", variable: 'KUBECONFIG_FILE')]) {
+        // تعيين KUBECONFIG بشكل صحيح
         sh '''
-            export KUBECONFIG=${KUBECONFIG}
+            export KUBECONFIG=${KUBECONFIG_FILE}
             kubectl cluster-info
             kubectl apply -f ${deploymentFile}
         '''
     }
 }
+

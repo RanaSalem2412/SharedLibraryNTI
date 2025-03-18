@@ -16,12 +16,14 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
+                // استنساخ المستودع من GitHub
                 git url: GITHUB_REPO_URL, branch: GITHUB_REPO_BRANCH
             }
         }
         
         stage('Build Application') {
             steps {
+                // بناء التطبيق باستخدام Maven
                 sh 'mvn clean package'
             }
         }
@@ -29,6 +31,7 @@ pipeline {
         stage('Manage Docker Image') {
             steps {
                 script {
+                    // استدعاء الدالة من المكتبة المشتركة لبناء ودفع الصورة
                     buildandPushDockerImage("${DOCKERHUB_CRED_ID}", "${DOCKER_REGISTRY}", "${DOCKER_IMAGE}")
                 }
             }
@@ -37,7 +40,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // استدعاء الدالة من المكتبة المشتركة
+                    // استدعاء الدالة من المكتبة المشتركة لنشر التطبيق على Kubernetes
                     deployOnKubernetes(k8sCredentialsID: "${K8S_CRED_ID}", deploymentFile: "${DEPLOYMENT}")
                 }
             }

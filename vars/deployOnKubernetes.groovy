@@ -3,11 +3,11 @@ def call(Map args) {
     def deploymentFile = args.deploymentFile
 
     withCredentials([file(credentialsId: k8sCredentialsID, variable: 'KUBECONFIG')]) {
-        sh '''
+        sh """
             echo "KUBECONFIG is set to: ${KUBECONFIG}"
             export KUBECONFIG=${KUBECONFIG}
             kubectl cluster-info
             kubectl apply -f ${deploymentFile}
-        ''' 
+        """ 
     }
 }

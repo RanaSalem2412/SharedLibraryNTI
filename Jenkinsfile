@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     // استدعاء الدالة من المكتبة المشتركة
-                    deployOnKubernetes("${K8S_CRED_ID}", "${DEPLOYMENT}")
+                    deployOnKubernetes(k8sCredentialsID: "${K8S_CRED_ID}", deploymentFile: "${DEPLOYMENT}")
                 }
             }
         }

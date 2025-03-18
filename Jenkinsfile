@@ -1,4 +1,4 @@
-@Library('SharedLibraryNTI') _ 
+@Library('SharedLibraryNTI') _  // استدعاء المكتبة المشتركة
 
 pipeline {
     agent { label 'slave' }
@@ -9,8 +9,8 @@ pipeline {
         DOCKER_REGISTRY    = "ranasalem2412"
         DOCKER_IMAGE       = "rana_image2"
         DOCKERHUB_CRED_ID  = "dockerhub"
-        K8S_CRED_ID        = 'kube'
-        DEPLOYMENT         = 'deployment.yaml' // اسم الملف الذي سيتم تحميله من المكتبة
+        K8S_CRED_ID        = 'kube'  // تعريف معرف الكريديشينال للـ K8S
+        DEPLOYMENT         = 'deployment.yaml' // اسم الملف الذي سيتم نشره
     }
     
     stages {
@@ -37,7 +37,8 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    deployOnKubernetes("${K8S_CRED_ID}", "${DOCKER_REGISTRY}", "${DOCKER_IMAGE}", "${DEPLOYMENT}")
+                    // استدعاء الدالة من المكتبة المشتركة
+                    deployOnKubernetes("${K8S_CRED_ID}", "${DEPLOYMENT}")
                 }
             }
         }
